@@ -1,28 +1,46 @@
 import CustomTable from '@/Components/Common/CustomTable'
 import CustomTableHeader from '@/Components/Common/CustomTableHeader'
-import { Box } from '@mui/material'
-import React from 'react'
+import { Box, Stack } from '@mui/material'
+import React, { startTransition, useCallback, useState, useEffect } from 'react'
 import { GridColDef } from '@mui/x-data-grid';
 import useSWR from 'swr'
 import { fetchData } from '@/CustomAxios';
-
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { useRouter } from 'next/router';
 
 //below code for swr api call
 const fetchuser = async () => {
     const response = await fetchData('franchisee/revenue/list')
-    const data = await response.data.data;
+    const data = await response?.data?.data;
     return data
 }
 
 
 const Revenue = () => {
 
+    const router = useRouter();
 
-    const { data, error, isLoading } = useSWR('revenuelist', fetchuser);
+    const { data, error, isLoading } = useSWR('revenuelist', fetchuser, { refreshInterval: 3000 });
+
+    const [search, setSearch] = useState<any>(data?.revenue_list);
+    const [list, setList] = useState<any>(data?.revenue_list);
+
+    console.log(list);
+
+    useEffect(() => {
+        setList(data?.revenue_list)
+        setSearch(data?.revenue_list)
+    }, [data])
+
+
+    const viewRevenuePage = useCallback((id: string) => {
+        router.push(`/revenue/view/${id}`)
+    }, [])
+
 
     const columns: GridColDef[] = [
         {
-            field: 'id',
+            field: 'order_id',
             headerName: 'Order ID',
             flex: 1,
             headerAlign: 'center',
@@ -37,7 +55,7 @@ const Revenue = () => {
 
         },
         {
-            field: 'storename',
+            field: 'store_name',
             headerName: 'Store Name',
             flex: 1,
             headerAlign: 'center',
@@ -53,7 +71,7 @@ const Revenue = () => {
 
         },
         {
-            field: 'TotalIncom',
+            field: 'total_order_income',
             headerName: 'Total Order Income',
             flex: 1,
             headerAlign: 'center',
@@ -61,7 +79,7 @@ const Revenue = () => {
 
         },
         {
-            field: 'vendorexpense',
+            field: 'vendor_expense',
             headerName: 'vendor Expense',
             flex: 1,
             headerAlign: 'center',
@@ -69,7 +87,7 @@ const Revenue = () => {
 
         },
         {
-            field: 'deliveryExpress',
+            field: 'delivery_charge',
             headerName: 'Delivery Expense',
             flex: 1,
             headerAlign: 'center',
@@ -77,7 +95,7 @@ const Revenue = () => {
 
         },
         {
-            field: 'profilt',
+            field: 'franchise_profit',
             headerName: 'Profit',
             flex: 1,
             headerAlign: 'center',
@@ -87,33 +105,41 @@ const Revenue = () => {
         {
             field: 'Actions',
             headerName: 'Actions',
-            flex: 1,
+            width: 200,
             headerAlign: 'center',
             align: 'center',
+            renderCell: ({ row }) => (
+                <Stack alignItems={'center'} gap={1} direction={'row'}>
+                    <RemoveRedEyeIcon
+                        onClick={() => viewRevenuePage(row?._id)}
+                        style={{
+                            color: '#58D36E',
+                            cursor: 'pointer'
+                        }} />
 
-        },
-    ]
+                </Stack>
+            )
+        }
+    ];
 
-    const row = [{
-        id: '001',
-        name: 'ginil',
-        storename: 'MY Store',
-        city: 'Thodupuzha',
-        TotalIncom: '1000',
-        vendorexpense: '1111',
-        deliveryExpress: '30',
-        profilt: '400'
-    }]
 
-    if (error) return <div>failed to load</div>
-    if (isLoading) return <div>loading...</div>
+    const searchfranchise = (value: any) => {
+        let Results = search?.filter((com: any) => com?.order_id.toString().toLowerCase().includes(value.toLowerCase())
+        )
+        startTransition(() => {
+            setList(Results)
+        })
+    }
 
+    if (error) return <Box px={5} py={2} pt={10} mt={0}>failed to load</Box>
+    if (isLoading) return <Box px={5} py={5} pt={10} mt={0}>loading...</Box>
+    if (!data?.revenue_list) return <Box px={5} py={5} pt={10} mt={0}>loading...</Box>
     return (
         <Box px={5} py={2} pt={10} mt={0}>
             <Box bgcolor={"#ffff"} mt={3} p={2} borderRadius={5} height={'100%'}>
-                <CustomTableHeader setState={''} imprtBtn={false} Headerlabel='Revenue' onClick={null} addbtn={false} />
+                <CustomTableHeader setState={searchfranchise} imprtBtn={false} Headerlabel='Revenue' onClick={null} addbtn={false} />
                 <Box py={3}>
-                    <CustomTable dashboard={false} columns={columns} rows={row} id={"id"} bg={"#ffff"} label='Recent Activity' storeNumber={data?.total_store_count} />
+                    <CustomTable dashboard={false} columns={columns} rows={list ? list : []} id={"_id"} bg={"#ffff"} label='Recent Activity' storeNumber={data?.total_store_count} />
                 </Box>
             </Box>
         </Box>

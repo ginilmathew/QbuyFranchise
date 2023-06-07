@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import UserContext from '@/Context/user';
 import { signIn } from 'next-auth/react'
 import { toast } from "react-toastify";
+import { postData } from '@/CustomAxios';
 const OTP = () => {
 
 
@@ -59,7 +60,6 @@ const OTP = () => {
                 callbackUrl: `${window.location.origin}`,
             });
 
-            console.log({ res }, "OTP RES")
             if (res?.error) {
                 toast.error(res.error)
                 console.log({ response: res?.error })
@@ -81,6 +81,16 @@ const OTP = () => {
     }, [otp]);
 
 
+    const ResndOtp = useCallback(async () => {
+        try {
+            await postData('auth/franchiseloginotp', { mobile: mobile });
+            toast.success(`An OTP send to your registered number`);
+        } catch (err: any) {
+            toast.error(err?.message);
+        } 
+    }, [])
+
+
     return (
         <Box sx={{ height: '100vh', backgroundImage: `url('/images/login.png')`, objectFit: 'contain', display: 'flex', justifyContent: 'center' }}>
             <Stack justifyContent={'center'} alignItems={'center'} gap={3}>
@@ -91,7 +101,7 @@ const OTP = () => {
                     width={100}
                     height={100}
                 />
-                <Typography letterSpacing={1} fontSize={14} sx={{  fontFamily: `'Poppins' sans-serif`}}>A OTP has been sent to your registered mobile number</Typography>
+                <Typography letterSpacing={1} fontSize={14} sx={{ fontFamily: `'Poppins' sans-serif` }}>A OTP has been sent to your registered mobile number</Typography>
                 <Box sx={{ display: 'flex', gap: 2 }}>
                     {otp.map((value, index) => (
                         <input
@@ -108,7 +118,7 @@ const OTP = () => {
                 </Box>
                 <Box px={100} display={'flex'} justifyContent={'flex-end'} alignItems={'flex-end'}>
                     <Typography style={{ width: 150 }}></Typography>
-                    <Typography fontSize={14} fontWeight={'bold'} letterSpacing={1} sx={{  fontFamily: `'Poppins' sans-serif`}}>Resend OTP</Typography>
+                    <Typography fontSize={14} fontWeight={'bold'} letterSpacing={1} sx={{ fontFamily: `'Poppins' sans-serif`,cursor:'pointer' }} onClick={ResndOtp}>Resend OTP</Typography>
                 </Box>
 
                 <Custombutton
