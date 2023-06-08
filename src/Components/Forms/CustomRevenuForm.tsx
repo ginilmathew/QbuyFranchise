@@ -143,7 +143,7 @@ const CustomRevenuForm = ({ id }: Props) => {
             <CustomBox title='Payment Details'>
                 <Grid container spacing={2}>
                     <Grid item xs={12} lg={2.4}>
-                        <Typography>Order ID: {revenudata?.order?.paymentDetails?.orderId}</Typography>
+                        <Typography>Order ID: {revenudata?.order?.order_id}</Typography>
                     </Grid>
                     <Grid item xs={12} lg={2.4}>
                         <Typography>Payment Type : {revenudata?.order?.payment_type}</Typography>

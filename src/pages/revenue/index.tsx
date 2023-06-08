@@ -1,6 +1,6 @@
 import CustomTable from '@/Components/Common/CustomTable'
 import CustomTableHeader from '@/Components/Common/CustomTableHeader'
-import { Box, Stack } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import React, { startTransition, useCallback, useState, useEffect } from 'react'
 import { GridColDef } from '@mui/x-data-grid';
 import useSWR from 'swr'
@@ -20,7 +20,7 @@ const Revenue = () => {
 
     const router = useRouter();
 
-    const { data, error, isLoading } = useSWR('revenuelist', fetchuser, { refreshInterval: 3000 });
+    const { data, error, isLoading } = useSWR('revenuelist', fetchuser, { refreshInterval: 60000 });
 
     const [search, setSearch] = useState<any>(data?.revenue_list);
     const [list, setList] = useState<any>(data?.revenue_list);
@@ -124,7 +124,7 @@ const Revenue = () => {
 
 
     const searchfranchise = (value: any) => {
-        let Results = search?.filter((com: any) => com?.order_id.toString().toLowerCase().includes(value.toLowerCase())
+        let Results = search?.filter((com: any) => com?.order_id.toString().toLowerCase().includes(value.toLowerCase()) || com?.store_name.toString().toLowerCase().includes(value.toLowerCase())
         )
         startTransition(() => {
             setList(Results)
@@ -132,14 +132,14 @@ const Revenue = () => {
     }
 
     if (error) return <Box px={5} py={2} pt={10} mt={0}>failed to load</Box>
-    if (isLoading) return <Box px={5} py={5} pt={10} mt={0}>loading...</Box>
-    if (!data?.revenue_list) return <Box px={5} py={5} pt={10} mt={0}>loading...</Box>
+    if (isLoading) return <Box px={5} py={5} pt={10} mt={0}><Typography sx={{fontSize:18}}>Loading...</Typography></Box>
+    if (!data?.revenue_list) return <Box px={5} py={5} pt={10} mt={0}><Typography sx={{fontSize:18}}>Loading...</Typography></Box>
     return (
         <Box px={5} py={2} pt={10} mt={0}>
             <Box bgcolor={"#ffff"} mt={3} p={2} borderRadius={5} height={'100%'}>
                 <CustomTableHeader setState={searchfranchise} imprtBtn={false} Headerlabel='Revenue' onClick={null} addbtn={false} />
                 <Box py={3}>
-                    <CustomTable dashboard={false} columns={columns} rows={list ? list : []} id={"_id"} bg={"#ffff"} label='Recent Activity' storeNumber={data?.total_store_count} />
+                    <CustomTable dashboard={false} columns={columns} rows={list ? list : []} id={"_id"} bg={"#ffff"} label='Recent Activity' storeNumber={data?.total_store_count}  citynumber={data?.city_count}/>
                 </Box>
             </Box>
         </Box>

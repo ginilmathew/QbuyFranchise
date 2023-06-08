@@ -22,7 +22,6 @@ type Inputs = {
 const Custombutton = ({ label, onClick, endIcon, startIcon, disabled, IconStart, IconEnd, height, btncolor,width }: Inputs) => {
     return (
         <>
-
             <Button
                 disabled={disabled ? disabled : false}
                 variant='contained'

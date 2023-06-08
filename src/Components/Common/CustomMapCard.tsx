@@ -1,16 +1,24 @@
+import { IMAGE_URL } from '@/Config'
 import { Avatar, Box, Typography } from '@mui/material'
 import React from 'react'
 
-const CustomMapCard = () => {
+type props = {
+    data: any
+
+}
+const CustomMapCard = ({ data }: props) => {
+
+    console.log({ data })
+
     return (
         <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', gap: 1 }}>
             <Box>
-                <Avatar src='/images/panda.png' sx={{ height: 35, width: 35 }} variant='rounded'></Avatar>
+                <Avatar src={`${IMAGE_URL}${data?.logo}`} sx={{ height: 45, width: 45 }} variant='rounded'></Avatar>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2 }}>
-                <Typography sx={{ fontSize: 12, letterSpacing: .5, fontWeight: 'bold', fontFamily: `'Poppins' sans-serif` }}>ammu</Typography>
-                <Typography sx={{ fontSize: 10, letterSpacing: 1, color: 'grey', fontFamily: `'Poppins' sans-serif` }}>ID:#00000</Typography>
-                <Typography sx={{ fontSize: 10, letterSpacing: 1, color: 'grey', fontFamily: `'Poppins' sans-serif` }}>Current Status:<span style={{ color: 'red', fontFamily: `'Poppins' sans-serif` }}>Offline</span> </Typography>
+                <Typography sx={{ fontSize: 12, letterSpacing: 1, fontWeight: 'bold', fontFamily: `'Poppins' sans-serif` }}>{data?.name}</Typography>
+                <Typography sx={{ fontSize: 10, letterSpacing: 1, color: 'grey', fontFamily: `'Poppins' sans-serif` }}>ID:#{data?.id}</Typography>
+                <Typography sx={{ fontSize: 10, letterSpacing: 1, color: 'grey', fontFamily: `'Poppins' sans-serif` }}>Current Status:<span style={{ color: data?.status === 'active' ? 'green' : 'red', fontFamily: `'Poppins' sans-serif` }}>{data?.status}</span> </Typography>
             </Box>
 
         </Box>

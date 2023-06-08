@@ -33,11 +33,11 @@ const RevenuViewTable = ({ res }: props) => {
                     <TableBody>
                         {res?.order?.product_details?.map((row: any) => (
                             <TableRow
-                                key={row.name}
+                                key={row._id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.name}  {row.variants ? row.variants?.title : ''}
+                                   {row?.productdata?.store?.name}
                                 </TableCell>
                                 <TableCell align="center">{row.store?.name}</TableCell>
                                 <TableCell align="center">{row.quantity}</TableCell>

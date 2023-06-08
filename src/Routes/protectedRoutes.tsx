@@ -32,6 +32,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     useEffect(() => {
         if (session) {
             let details = JSON.parse(JSON.stringify(session.user))
+            console.log({details})
             localStorage.setItem("token", details?.accessToken)
         }
     }, [session])

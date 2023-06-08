@@ -87,7 +87,7 @@ const OTP = () => {
             toast.success(`An OTP send to your registered number`);
         } catch (err: any) {
             toast.error(err?.message);
-        } 
+        }
     }, [])
 
 
@@ -118,7 +118,7 @@ const OTP = () => {
                 </Box>
                 <Box px={100} display={'flex'} justifyContent={'flex-end'} alignItems={'flex-end'}>
                     <Typography style={{ width: 150 }}></Typography>
-                    <Typography fontSize={14} fontWeight={'bold'} letterSpacing={1} sx={{ fontFamily: `'Poppins' sans-serif`,cursor:'pointer' }} onClick={ResndOtp}>Resend OTP</Typography>
+                    <Typography fontSize={14} fontWeight={'bold'} letterSpacing={1} sx={{ fontFamily: `'Poppins' sans-serif`, cursor: 'pointer' }} onClick={ResndOtp}>Resend OTP</Typography>
                 </Box>
 
                 <Custombutton

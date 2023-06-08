@@ -42,6 +42,12 @@ const Header = () => {
 
     }, [])
 
+
+    const NavigationToProfile = useCallback(() => {
+        router.push('/profile')
+    }, [])
+
+
     const LogoutAll = useCallback(async () => {
 
         await localStorage.clear();
@@ -83,13 +89,16 @@ const Header = () => {
 
 
             <Box display={'flex'} gap={1} >
-                <Box width={140} height={50} sx={{ background: '#58d36e' }} borderRadius={10} display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+                <Tooltip title='Profile'>
+                <Box width={140} height={50} sx={{ background: '#58d36e', cursor: 'pointer' }} borderRadius={10} display={'flex'} justifyContent={'space-between'} alignItems={'center'} onClick={NavigationToProfile}>
                     <Box px={1.5}>
                         <Typography sx={{ fontFamily: `'Poppins' sans-serif`, }}>{'Franchise'}</Typography>
                         <Typography fontSize={12} color={'#fff'} sx={{ fontFamily: `'Poppins' sans-serif`, }}>{'Franchisee'}</Typography>
                     </Box>
                     <Avatar sx={{ height: 40, borderRadius: 10 }}></Avatar>
                 </Box>
+                </Tooltip>
+               
                 <Box width={50} height={50} borderRadius={12} sx={{ background: '#58d36e', cursor: 'pointer' }} display={'flex'} alignItems={'center'} justifyContent={'center'}>
                     <NotificationsIcon sx={{ color: "#fff" }} />
                 </Box>
@@ -106,7 +115,7 @@ const Header = () => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title" sx={{  fontFamily: `'Poppins' sans-serif`}}>
+                <DialogTitle id="alert-dialog-title" sx={{ fontFamily: `'Poppins' sans-serif` }}>
                     Are you sure you want to log out ?
                 </DialogTitle>
                 <DialogContent>

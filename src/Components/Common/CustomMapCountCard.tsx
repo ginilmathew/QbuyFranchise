@@ -1,19 +1,33 @@
 import { Box, Typography } from '@mui/material'
-import React from 'react'
+import React, { memo } from 'react'
 
-const CustomMapCountCard = () => {
+type props = {
+    label :string,
+    count:number,
+    all?:boolean,
+    width?:number,
+    color:string,
+    onclick:any;
+}
+
+
+const CustomMapCountCard = memo(({label,count,all,width,color,onclick}:props) => {
+  
     return (
         <Box
+            onClick={()=>onclick()}
             sx={{
+                cursor:'pointer',
                 position: 'relative',
                 boxShadow: .5,
                 display: 'flex',
                 alignItems: 'center',
-                background: '#fff',
-                width: 100,
+                background: color,
+                width:width ? width : 100,
                 borderRadius: 2
             }} px={1} py={1} border={'2px solid #7EDD8F'}>
-            <Typography sx={{  fontFamily: `'Poppins' sans-serif`,fontSize:14}}>Store</Typography>
+            <Typography sx={{  fontFamily: `'Poppins' sans-serif`,fontSize:14}}>{label}</Typography>
+            {!all &&
             <Box sx={{
                 padding: 2,
                 height: 20,
@@ -26,11 +40,11 @@ const CustomMapCountCard = () => {
                 position: 'absolute', right: -5,
                 top: -10
             }}>
-                <Typography style={{ fontSize: '12', color: '#ffff' ,  fontFamily: `'Poppins' sans-serif`}}>10</Typography>
+                <Typography style={{ fontSize: '12', color: '#ffff' ,  fontFamily: `'Poppins' sans-serif`}}>{count}</Typography>
 
-            </Box>
+            </Box>}
         </Box>
     )
-}
+})
 
 export default CustomMapCountCard

@@ -1,12 +1,13 @@
 import { Box } from '@mui/material'
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import React, { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import { PolygonF, GoogleMap, useJsApiLoader, MarkerF, InfoWindowF } from "@react-google-maps/api";
 import type { NextPage } from 'next';
 import CustomMapCard from './CustomMapCard';
 import CustomMapCountCard from './CustomMapCountCard';
 type props = {
     onComplete: any,
-    path: any
+    path: any,
+    data: any,
 }
 
 interface MarkerData {
@@ -15,9 +16,21 @@ interface MarkerData {
     description: string;
     image: string;
     category: string;
+
+
 }
 
-const CustomMap = ({ onComplete, path }: props) => {
+const CustomMap = ({ onComplete, path, data }: props) => {
+
+
+
+
+    const [franchiseLocation, setFranchiselocation] = useState([])
+    const [vendor, setVendor] = useState<any>([])
+    const [active, setActive] = useState<string>('All')
+
+
+
 
 
     const { isLoaded } = useJsApiLoader({
@@ -69,7 +82,7 @@ const CustomMap = ({ onComplete, path }: props) => {
         },
     ];
 
-  
+
 
     const [selectedMarker, setSelectedMarker] = useState<MarkerData | null>(null);
 
@@ -78,6 +91,7 @@ const CustomMap = ({ onComplete, path }: props) => {
 
 
     const handleMarkerClick = (marker: MarkerData) => {
+        console.log({ marker })
         setSelectedMarker(marker);
     };
 
@@ -96,8 +110,35 @@ const CustomMap = ({ onComplete, path }: props) => {
     const categoryToMarkerImage: Record<string, string> = {
         category1: '/images/person.png',
         category2: '/images/rider.png',
-        category3: '/images/store.png',
+        store: '/images/store.png',
     };
+
+
+    const activeColor = useCallback((color: string) => {
+        setActive(color)
+
+    }, [active])
+
+    useEffect(() => {
+        if (data) {
+            let result: any = data?.franchise?.delivery_location.map((x: any) => ({ lat: x[0], lng: x[1] }));
+            setFranchiselocation(result)
+            let vendorresult = data?.vendors?.map((x: any) => ({
+                name: x?.vendor_name,
+                position: { lat: parseFloat(x?.vendor_location?.[0]?.lat), lng: parseFloat(x?.vendor_location?.[0]?.lng) },
+                email: x?.vendor_email,
+                id: x?.vendor_id,
+                address: x?.store_address,
+                mobile: x?.vendor_mobile,
+                category: 'store',
+                logo: x?.store_logo,
+                status: x?.status
+
+            }))
+            setVendor(vendorresult)
+
+        }
+    }, [data])
 
 
 
@@ -106,12 +147,12 @@ const CustomMap = ({ onComplete, path }: props) => {
         <Box sx={{ p: 2 }}>
             {isLoaded && <GoogleMap
                 mapContainerStyle={{ width: '100%', height: '70vh', borderRadius: 25 }}
-                center={markerData[0].position}
+                center={franchiseLocation[0]}
                 zoom={10}
                 options={mapOptions}
             >
                 <PolygonF
-                    paths={polygonCoords}
+                    paths={franchiseLocation}
                     options={{
                         strokeColor: 'black',
                         strokeOpacity: 0.8,
@@ -120,7 +161,7 @@ const CustomMap = ({ onComplete, path }: props) => {
                         fillOpacity: 0.35,
                     }}
                 />
-                {markerData.map((marker, index) => (
+                {vendor.map((marker: any, index: any) => (
                     <MarkerF
                         key={index}
                         position={marker.position}
@@ -132,7 +173,7 @@ const CustomMap = ({ onComplete, path }: props) => {
                     />
                 ))}
 
-            
+
                 {selectedMarker && (
                     <InfoWindowF
                         options={{ disableAutoPan: false, minWidth: 0 }}
@@ -140,14 +181,15 @@ const CustomMap = ({ onComplete, path }: props) => {
                         onCloseClick={handleInfoWindowClose}
                     >
                         <Box>
-                            <CustomMapCard />
+                            <CustomMapCard data={selectedMarker} />
                         </Box>
                     </InfoWindowF>
                 )}
                 <div style={overlayBoxStyles}>
-                    <CustomMapCountCard />
-                    <CustomMapCountCard />
-                    <CustomMapCountCard />
+                    <CustomMapCountCard label='All' count={data?.customersCount} all={true} width={50} color={active === 'All' ? '#a7d5a9' : '#ffff'} onclick={() => activeColor('All')} />
+                    <CustomMapCountCard label='Customer' count={data?.customersCount} color={active === 'Customer' ? '#a7d5a9' : '#ffff'} onclick={() => activeColor('Customer')} />
+                    <CustomMapCountCard label='Vendor' count={data?.vendorsCount} color={active === 'Vendor' ? '#a7d5a9' : '#ffff'} onclick={() => activeColor('Vendor')} />
+                    <CustomMapCountCard label='Rider' count={data?.riderCount} color={active === 'Rider' ? '#a7d5a9' : '#ffff'} onclick={() => activeColor('Rider')} />
                 </div>
 
             </GoogleMap>}

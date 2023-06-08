@@ -11,9 +11,10 @@ type props = {
     bg: string,
     dashboard: boolean,
     rowheight?: number,
-    storeNumber: number
+    storeNumber: number,
+    citynumber:number
 }
-const CustomTable = ({ columns, rows, id, bg, label, dashboard, rowheight, storeNumber }: props) => {
+const CustomTable = ({ columns, rows, id, bg, label, dashboard, rowheight, storeNumber ,citynumber}: props) => {
     let texttruncate = label.slice(0, 3);
     let custtext = label.slice(3)
 
@@ -44,7 +45,7 @@ const CustomTable = ({ columns, rows, id, bg, label, dashboard, rowheight, store
                     getRowId={row => row[id]}
                 />
                 <Box mt={5} mb={2} display={'flex'} alignItems={'center'} gap={2}>
-                    <CustomTableContent label='Cities' nuberLabel={30} />
+                    <CustomTableContent label='Cities' nuberLabel={citynumber} />
                     <CustomTableContent label='Stores' nuberLabel={storeNumber} />
                 </Box>
             </Box>

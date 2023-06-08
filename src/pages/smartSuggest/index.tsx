@@ -17,15 +17,16 @@ const fetchuser = async () => {
 
 const SmartSuggest = () => {
 
-  const { data, error, isLoading } = useSWR('revenuelist', fetchuser, { refreshInterval: 1000 });
+  const { data, error, isLoading } = useSWR('smartsuggest', fetchuser, { refreshInterval: 60000 });
 
-  console.log({ data },'FETCH FRACHISE')
+  if (error) return <Box px={5} py={2} pt={10} mt={0}>failed to load</Box>
+  if (isLoading) return <Box px={5} py={5} pt={10} mt={0}><Typography sx={{ fontSize: 18 }}>Loading...</Typography></Box>
   return (
     <Box px={5} py={2} pt={10} mt={0}>
       <Box my={5}>
         <Typography sx={{ color: '#58d36e', fontSize: 30, fontWeight: 'bold', letterSpacing: 1, fontFamily: `'Poppins' sans-serif`, }}>Smart Suggest</Typography>
         <Box >
-          <CustomMap path={location} onComplete={null} />
+          <CustomMap path={location} onComplete={null} data={data} />
         </Box>
       </Box>
     </Box>
