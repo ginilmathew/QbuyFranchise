@@ -5,6 +5,7 @@ import { LinearProgress, Stack } from '@mui/material';
 import { fetchData } from '@/CustomAxios';
 import { toast } from 'react-toastify';
 import { useSession } from "next-auth/react"
+import UserContext from '@/Context/user';
 
 
 type ProtectedRouteProps = {
@@ -16,13 +17,12 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     const [userLoader, setUserLoader] = useState<boolean>(false)
     const router = useRouter()
     const { data: session, status } = useSession();
-
+    const userContext = useContext(UserContext)
 
 
     useEffect(() => {
         if (status === "unauthenticated") {
-            console.log("No JWT");
-            console.log(status);
+      
             void router.push("/login");
         } else if (status === "authenticated") {
             void router.push("/");
@@ -33,6 +33,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
         if (session) {
             let details = JSON.parse(JSON.stringify(session.user))
             console.log({details})
+             userContext.setUser(details);
             localStorage.setItem("token", details?.accessToken)
         }
     }, [session])

@@ -33,7 +33,7 @@ const Login = () => {
     const schema = yup
         .object()
         .shape({
-            mobile: yup.string().matches(phoneRegExp, 'Phone number is not valid').max(10,'maximum number 10').required('A phone number is required'),
+            mobile: yup.string().matches(phoneRegExp,'Phone number is not valid').max(10,'maximum number 10').min(10,'Minimum number 10').required('A phone number is required'),
         })
         .required();
 

@@ -27,7 +27,8 @@ const CustomMap = ({ onComplete, path, data }: props) => {
 
     const [franchiseLocation, setFranchiselocation] = useState([])
     const [vendor, setVendor] = useState<any>([])
-    const [active, setActive] = useState<string>('All')
+    const [active, setActive] = useState<string>('All');
+    const [customer, setCustomer] = useState<any>([])
 
 
 
@@ -136,6 +137,18 @@ const CustomMap = ({ onComplete, path, data }: props) => {
 
             }))
             setVendor(vendorresult)
+            let customerresult = data?.customers?.map((c: any) => ({
+                name: '',
+                position: { lat: parseFloat(c.location?.[0]), lng: parseFloat(c?.location?.[1]) },
+                email: '',
+                id: c?.customer_id,
+                address: '',
+                mobile: '',
+                category: 'customer',
+                logo: '',
+                status: c?.login_status
+            }))
+            setCustomer(customerresult)
 
         }
     }, [data])

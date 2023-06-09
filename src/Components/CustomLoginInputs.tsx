@@ -37,7 +37,7 @@ const CustomLoginInput = ({ control, fieldName, placeholder, error, Icon }: Inpu
                                 className="form-control"
                                 placeholder={placeholder}
                                 id="exampleInputEmail1"
-                                type={'text'}
+                                type={'number'}
                                 InputProps={{
                                     // disableUnderline: true,
                                     style: {

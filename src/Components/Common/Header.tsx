@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Tooltip, Typography } from '@mui/material'
 import Image from 'next/image'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import PaymentsIcon from '@mui/icons-material/Payments';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -13,9 +13,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import UserContext from '@/Context/user';
 
 const Header = () => {
     const router = useRouter()
+    const userContext = useContext(UserContext);
+
+    console.log(userContext?.user,"Console VVVVV")
 
     const colorHeader = router.pathname === '/';
     const colorHeader2 = router.pathname === '/smartSuggest';
@@ -90,15 +94,15 @@ const Header = () => {
 
             <Box display={'flex'} gap={1} >
                 <Tooltip title='Profile'>
-                <Box width={140} height={50} sx={{ background: '#58d36e', cursor: 'pointer' }} borderRadius={10} display={'flex'} justifyContent={'space-between'} alignItems={'center'} onClick={NavigationToProfile}>
-                    <Box px={1.5}>
-                        <Typography sx={{ fontFamily: `'Poppins' sans-serif`, }}>{'Franchise'}</Typography>
-                        <Typography fontSize={12} color={'#fff'} sx={{ fontFamily: `'Poppins' sans-serif`, }}>{'Franchisee'}</Typography>
+                    <Box width={140} height={50} sx={{ background: '#58d36e', cursor: 'pointer' }} borderRadius={10} display={'flex'} justifyContent={'space-between'} alignItems={'center'} onClick={NavigationToProfile}>
+                        <Box px={1.5}>
+                            <Typography sx={{ fontFamily: `'Poppins' sans-serif`, }}>{'Franchise'}</Typography>
+                            <Typography fontSize={12} color={'#fff'} sx={{ fontFamily: `'Poppins' sans-serif`, }}>{'Franchisee'}</Typography>
+                        </Box>
+                        <Avatar sx={{ height: 40, borderRadius: 10 }}></Avatar>
                     </Box>
-                    <Avatar sx={{ height: 40, borderRadius: 10 }}></Avatar>
-                </Box>
                 </Tooltip>
-               
+
                 <Box width={50} height={50} borderRadius={12} sx={{ background: '#58d36e', cursor: 'pointer' }} display={'flex'} alignItems={'center'} justifyContent={'center'}>
                     <NotificationsIcon sx={{ color: "#fff" }} />
                 </Box>
