@@ -1,36 +1,45 @@
 import CustomTable from '@/Components/Common/CustomTable'
 import CustomTableHeader from '@/Components/Common/CustomTableHeader'
 import { Box, Stack, Typography } from '@mui/material'
-import React, { startTransition, useCallback, useState, useEffect } from 'react'
+import React, { startTransition, useCallback, useState, useEffect, useContext } from 'react'
 import { GridColDef } from '@mui/x-data-grid';
 import useSWR from 'swr'
 import { fetchData } from '@/CustomAxios';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { useRouter } from 'next/router';
+import ModeContext from '@/Context/type';
 
 //below code for swr api call
-const fetchuser = async () => {
-    const response = await fetchData('franchisee/revenue/list')
-    const data = await response?.data?.data;
-    return data
-}
 
 
 const Revenue = () => {
+    const { mode } = useContext(ModeContext)
+
 
     const router = useRouter();
+    const fetchuser = async () => {
+        const response = await fetchData(`franchisee/revenue/list/${mode ? mode : process.env.NEXT_PUBLIC_TYPE}`)
+        const data = await response?.data?.data;
+        return data
+    }
 
-    const { data, error, isLoading } = useSWR('revenuelist', fetchuser, { refreshInterval: 60000 });
+
+    const { data, error, isLoading } = useSWR('revenuelist', fetchuser, { refreshInterval: 1000 });
+
+    console.log({ data })
 
     const [search, setSearch] = useState<any>(data?.revenue_list);
-    const [list, setList] = useState<any>(data?.revenue_list);
+    const [list, setList] = useState<any>([]);
 
-    console.log(list);
+
+    console.log({ list });
 
     useEffect(() => {
-        setList(data?.revenue_list)
-        setSearch(data?.revenue_list)
-    }, [data])
+        if (data?.revenue_list?.length > 0) {
+            setList(data?.revenue_list)
+            setSearch(data?.revenue_list)
+        }
+    },[data?.revenue_list])
 
 
     const viewRevenuePage = useCallback((id: string) => {
@@ -132,15 +141,16 @@ const Revenue = () => {
     }
 
     if (error) return <Box px={5} py={2} pt={10} mt={0}>failed to load</Box>
-    if (isLoading) return <Box px={5} py={5} pt={10} mt={0}><Typography sx={{fontSize:18}}>Loading...</Typography></Box>
-    if (!data?.revenue_list) return <Box px={5} py={5} pt={10} mt={0}><Typography sx={{fontSize:18}}>Loading...</Typography></Box>
+    if (isLoading) return <Box px={5} py={5} pt={10} mt={0}><Typography sx={{ fontSize: 18 }}>Loading...</Typography></Box>
+    if (!data?.revenue_list) return <Box px={5} py={5} pt={10} mt={0}><Typography sx={{ fontSize: 18 }}>Loading...</Typography></Box>
     return (
         <Box px={5} py={2} pt={10} mt={0}>
             <Box bgcolor={"#ffff"} mt={3} p={2} borderRadius={5} height={'100%'}>
                 <CustomTableHeader setState={searchfranchise} imprtBtn={false} Headerlabel='Revenue' onClick={null} addbtn={false} />
-                <Box py={3}>
-                    <CustomTable dashboard={false} columns={columns} rows={list ? list : []} id={"_id"} bg={"#ffff"} label='Recent Activity' storeNumber={data?.total_store_count}  citynumber={data?.city_count}/>
-                </Box>
+               
+                    <Box py={3}>
+                        <CustomTable dashboard={false} columns={columns} rows={list ? list : []} id={"_id"} bg={"#ffff"} label='Recent Activity' storeNumber={data?.total_store_count} citynumber={data?.city_count} />
+                    </Box>
             </Box>
         </Box>
     )

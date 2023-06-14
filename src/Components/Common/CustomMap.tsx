@@ -22,7 +22,7 @@ interface MarkerData {
 
 const CustomMap = ({ onComplete, path, data }: props) => {
 
-
+    console.log({ data })
 
 
     const [franchiseLocation, setFranchiselocation] = useState([])
@@ -50,49 +50,49 @@ const CustomMap = ({ onComplete, path, data }: props) => {
         []
     );
 
-    const polygonCoords: google.maps.LatLngLiteral[] = [
-        { lat: 37.123, lng: -122.456 },
-        { lat: 37.456, lng: -122.789 },
-        { lat: 37.789, lng: -122.123 },
-    ];
+    // const polygonCoords: google.maps.LatLngLiteral[] = [
+    //     { lat: 37.123, lng: -122.456 },
+    //     { lat: 37.456, lng: -122.789 },
+    //     { lat: 37.789, lng: -122.123 },
+    // ];
 
 
 
 
-    const markerData: MarkerData[] = [
-        {
-            position: { lat: 37.5, lng: -122.5 },
-            title: 'Marker 1',
-            description: 'This is marker 1',
-            image: 'https://www.pexels.com/photo/fashion-people-woman-relaxation-17045026/',
-            category: 'category3',
-        },
-        {
-            position: { lat: 37.6, lng: -122.6 },
-            title: 'Marker 2',
-            description: 'This is marker 2',
-            image: 'https://www.pexels.com/photo/fashion-people-woman-relaxation-17045026/',
-            category: 'category2',
-        },
-        {
-            position: { lat: 37.7, lng: -122.7 },
-            title: 'Marker 3',
-            description: 'This is marker 3',
-            image: 'https://www.pexels.com/photo/fashion-people-woman-relaxation-17045026/',
-            category: 'category1',
-        },
-    ];
+    // const markerData: MarkerData[] = [
+    //     {
+    //         position: { lat: 37.5, lng: -122.5 },
+    //         title: 'Marker 1',
+    //         description: 'This is marker 1',
+    //         image: 'https://www.pexels.com/photo/fashion-people-woman-relaxation-17045026/',
+    //         category: 'category3',
+    //     },
+    //     {
+    //         position: { lat: 37.6, lng: -122.6 },
+    //         title: 'Marker 2',
+    //         description: 'This is marker 2',
+    //         image: 'https://www.pexels.com/photo/fashion-people-woman-relaxation-17045026/',
+    //         category: 'category2',
+    //     },
+    //     {
+    //         position: { lat: 37.7, lng: -122.7 },
+    //         title: 'Marker 3',
+    //         description: 'This is marker 3',
+    //         image: 'https://www.pexels.com/photo/fashion-people-woman-relaxation-17045026/',
+    //         category: 'category1',
+    //     },
+    // ];
 
 
 
     const [selectedMarker, setSelectedMarker] = useState<MarkerData | null>(null);
 
 
-    console.log({ selectedMarker })
+
 
 
     const handleMarkerClick = (marker: MarkerData) => {
-        console.log({ marker })
+       
         setSelectedMarker(marker);
     };
 
@@ -109,7 +109,7 @@ const CustomMap = ({ onComplete, path, data }: props) => {
     };
 
     const categoryToMarkerImage: Record<string, string> = {
-        category1: '/images/person.png',
+        customer: '/images/person.png',
         category2: '/images/rider.png',
         store: '/images/store.png',
     };
@@ -117,7 +117,6 @@ const CustomMap = ({ onComplete, path, data }: props) => {
 
     const activeColor = useCallback((color: string) => {
         setActive(color)
-
     }, [active])
 
     useEffect(() => {
@@ -134,20 +133,21 @@ const CustomMap = ({ onComplete, path, data }: props) => {
                 category: 'store',
                 logo: x?.store_logo,
                 status: x?.status
-
             }))
             setVendor(vendorresult)
             let customerresult = data?.customers?.map((c: any) => ({
-                name: '',
+                name:c?.users?.name,
                 position: { lat: parseFloat(c.location?.[0]), lng: parseFloat(c?.location?.[1]) },
-                email: '',
+                email: c?.users?.email,
                 id: c?.customer_id,
                 address: '',
-                mobile: '',
+                mobile:c?.users?.mobile,
                 category: 'customer',
-                logo: '',
-                status: c?.login_status
+                logo: './images/user.png',
+                status:c?.status
             }))
+
+       
             setCustomer(customerresult)
 
         }
@@ -174,7 +174,19 @@ const CustomMap = ({ onComplete, path, data }: props) => {
                         fillOpacity: 0.35,
                     }}
                 />
-                {vendor.map((marker: any, index: any) => (
+                {(active === 'All' || active === 'Vendor') && vendor.map((marker: any, index: any) => (
+                    <MarkerF
+                        key={index}
+                        position={marker.position}
+                        onClick={() => handleMarkerClick(marker)}
+                        icon={{
+                            url: categoryToMarkerImage[marker.category],
+                            scaledSize: new window.google.maps.Size(40, 50),
+                        }}
+                    />
+                ))}
+
+                {(active === 'All' || active === 'Customer') && customer.map((marker: any, index: any) => (
                     <MarkerF
                         key={index}
                         position={marker.position}

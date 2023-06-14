@@ -19,7 +19,7 @@ const Header = () => {
     const router = useRouter()
     const userContext = useContext(UserContext);
 
-    console.log(userContext?.user,"Console VVVVV")
+   
 
     const colorHeader = router.pathname === '/';
     const colorHeader2 = router.pathname === '/smartSuggest';

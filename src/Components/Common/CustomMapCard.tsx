@@ -8,7 +8,7 @@ type props = {
 }
 const CustomMapCard = ({ data }: props) => {
 
-    console.log({ data })
+    
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', gap: 1 }}>

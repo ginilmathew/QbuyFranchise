@@ -15,7 +15,7 @@ type props = {
 
 const RevenuViewTable = ({ res }: props) => {
 
-    console.log({ res })
+
 
     return (
         <Box>

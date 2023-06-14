@@ -66,7 +66,7 @@ const OTP = () => {
             } else {
                 if (res?.url) {
                     //auth.setUser(session?.user)
-                    console.log("in")
+                  
                     //router.push('/home');
                     router.push(res?.url);
                 }
@@ -76,7 +76,7 @@ const OTP = () => {
                 }
             }
         } catch (error) {
-            console.log({ error }, "OTP ERROR")
+            // console.log({ error }, "OTP ERROR")
         }
     }, [otp]);
 

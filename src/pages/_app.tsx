@@ -14,6 +14,7 @@ import type { NextComponentType } from 'next'
 import { SessionProvider, useSession } from "next-auth/react"
 import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
 import { Poppins } from 'next/font/google';
+import ModeProvider from '@/Context/type/ModeContext';
 
 
 
@@ -61,23 +62,27 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         <LinearProgress color="success" />
       </Stack>
     )}
-    <SessionProvider session={session}>
-      <UserProvider>
-        {Component.auth ?
-          <Component {...pageProps} /> :
-          <ProtectedRoute>
-            <UserProvider>
-              {showHeader &&
-                <Header />}
-              <Component {...pageProps} />
+    <ModeProvider>
+      <SessionProvider session={session}>
+        <UserProvider>
+          {Component.auth ?
+            <Component {...pageProps} /> :
+            <ProtectedRoute>
 
-            </UserProvider>
-          </ProtectedRoute>
-        }
-        <ToastContainer />
+              <UserProvider>
+                {showHeader &&
+                  <Header />}
+                <Component {...pageProps} />
 
-      </UserProvider>
-    </SessionProvider>
+              </UserProvider>
+
+            </ProtectedRoute>
+          }
+          <ToastContainer />
+
+        </UserProvider>
+      </SessionProvider>
+    </ModeProvider>
 
   </main>
 

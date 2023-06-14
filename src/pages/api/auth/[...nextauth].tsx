@@ -32,7 +32,7 @@ export const authOptions = {
 					otp: credentials.otp,
 				};
 
-				console.log({ payload })
+		
 
 				const res = await fetch(`${process.env.NEXT_BASE_URL}auth/franchiselogin`, {
 					method: 'POST',

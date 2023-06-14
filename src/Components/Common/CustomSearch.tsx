@@ -1,4 +1,4 @@
-import React, { useTransition ,memo} from 'react'
+import React, { useTransition, memo } from 'react'
 import TextField from "@mui/material/TextField";
 import { InputAdornment } from '@mui/material';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -9,11 +9,11 @@ type props = {
 
 
 
-const CutomSearch = ({setState}:props) => {
+const CutomSearch = ({ setState }: props) => {
 
     const [pending, startTransition] = useTransition();
 
-    const onchangeValue = (e:any) => {
+    const onchangeValue = (e: any) => {
         startTransition(() => {
             setState(e.target.value)
         })
@@ -21,6 +21,7 @@ const CutomSearch = ({setState}:props) => {
     return (
         <>
             <TextField
+                autoComplete='new-password'
                 onChange={onchangeValue}
                 placeholder='Search...'
                 id="outlined-basic" variant="outlined"
