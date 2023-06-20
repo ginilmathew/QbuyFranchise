@@ -10,7 +10,7 @@ export const authOptions = {
 		CredentialsProvider({
 			name: "Custom",
 			credentials: {
-				mobile: { label: "mobile", type: "text", placeholder: "7902244780" },
+				mobile: { label: "mobile", type: "text", placeholder: "7902244700" },
 				otp: { label: "otp", type: "text" },
 			},
 			async authorize(credentials: any, req) {

@@ -54,35 +54,37 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   }, []);
 
 
+  console.log({ COMPONENT: Component.auth })
 
-
+  console.log({ session })
   return <main className={poppins.className}>
     {isLoading && showHeader && (
       <Stack sx={{ width: '100%', color: 'grey.500' }} >
         <LinearProgress color="success" />
       </Stack>
     )}
-    <ModeProvider>
-      <SessionProvider session={session}>
+
+    <SessionProvider session={session}>
+
+      <ModeProvider>
+
         <UserProvider>
-          {Component.auth ?
-            <Component {...pageProps} /> :
+          {Component?.auth ?
+            <Component {...pageProps} />
+            :
             <ProtectedRoute>
-
               <UserProvider>
-                {showHeader &&
-                  <Header />}
+                  <Header />
                 <Component {...pageProps} />
-
               </UserProvider>
-
             </ProtectedRoute>
           }
           <ToastContainer />
-
         </UserProvider>
-      </SessionProvider>
-    </ModeProvider>
+      </ModeProvider>
+
+    </SessionProvider>
+
 
   </main>
 

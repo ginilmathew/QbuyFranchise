@@ -16,26 +16,35 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     const [loading, setLoading] = useState(true)
     const [userLoader, setUserLoader] = useState<boolean>(false)
     const router = useRouter()
-    const { data: session, status } = useSession();
+
     const userContext = useContext(UserContext)
 
+    const { data: session, status } = useSession({
+        required: true,
+        onUnauthenticated() {
+            void router.push('/login')
+        },
+    })
+    // useEffect(() => {
+    //     if (status === "unauthenticated") {
+    //         void router.push("/login");
+    //     } else if (status === "authenticated") {
+    //         void router.push("/");
+    //     }
+    // }, []);
 
     useEffect(() => {
-        if (status === "unauthenticated") {
-      
-            void router.push("/login");
-        } else if (status === "authenticated") {
-            void router.push("/");
-        }
-    }, []);
 
-    useEffect(() => {
-        if (session) {
-            let details = JSON.parse(JSON.stringify(session.user))
-          
-             userContext.setUser(details);
-            localStorage.setItem("token", details?.accessToken)
+        try {
+            if (session) {
+                let details = JSON.parse(JSON.stringify(session.user))
+                userContext.setUser(details);
+                localStorage.setItem("token", details?.accessToken)
+            }
+        } catch (err: any) {
+            void router.push('/login')
         }
+
     }, [session])
 
     if (status === "loading") {
@@ -45,9 +54,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     }
 
     return <>
-        {status === 'authenticated' &&
-            <>
-        {children}</>}
+        {children}
 
     </>
 }
