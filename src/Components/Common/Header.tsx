@@ -19,7 +19,7 @@ const Header = () => {
     const router = useRouter()
     const userContext = useContext(UserContext);
 
-   
+
 
     const colorHeader = router.pathname === '/';
     const colorHeader2 = router.pathname === '/smartSuggest';
@@ -27,39 +27,39 @@ const Header = () => {
     const [openDialog, setOpenDialog] = useState<boolean>(false);
 
 
-    const handleClickOpenDialog = useCallback(() => {
+    const handleClickOpenDialog = () => {
         setOpenDialog(true);
-    }, [openDialog]);
+    };
 
-    const handleCloseDialog = useCallback(() => {
+    const handleCloseDialog = () => {
         setOpenDialog(false);
-    }, [openDialog]);
+    }
 
-    const NavigateRevenueScreen = useCallback(() => {
+    const NavigateRevenueScreen = () => {
         router.push('/')
 
-    }, [])
+    }
 
 
-    const NavigateSuggestScreen = useCallback(() => {
+    const NavigateSuggestScreen = () => {
         router.push('/smartSuggest')
 
-    }, [])
+    }
 
 
-    const NavigationToProfile = useCallback(() => {
+    const NavigationToProfile = () => {
         router.push('/profile')
-    }, [])
+    }
 
 
-    const LogoutAll = useCallback(async () => {
+    const LogoutAll = async () => {
 
         await localStorage.clear();
 
         signOut({ callbackUrl: "/login" })
 
         // router.push('/login')
-    }, [])
+    }
 
 
     return (

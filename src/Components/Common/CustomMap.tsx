@@ -117,7 +117,7 @@ const CustomMap = ({ onComplete, path, data }: props) => {
 
     const activeColor = useCallback((color: string) => {
         setActive(color)
-    }, [active])
+    }, [])
 
     useEffect(() => {
         if (data) {

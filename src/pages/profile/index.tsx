@@ -31,7 +31,7 @@ const Profile = () => {
 
     const { mode, setMode } = useContext(ModeContext);
 
-    console.log({ mode })
+
     const { data, error, isLoading } = useSWR('profilelist', fetchuser);
 
 

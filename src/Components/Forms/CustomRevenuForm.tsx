@@ -52,7 +52,7 @@ const CustomRevenuForm = ({ id }: Props) => {
         });
 
 
-    const revenueList = useCallback(async () => {
+    const revenueList = async () => {
         try {
             setLoading(true);
             const response = await fetchData(`franchisee/revenue/show/${id}`)
@@ -63,7 +63,7 @@ const CustomRevenuForm = ({ id }: Props) => {
         } finally {
             setLoading(false)
         }
-    }, [id])
+    }
 
 
     useEffect(() => {

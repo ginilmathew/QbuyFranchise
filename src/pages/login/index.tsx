@@ -47,7 +47,7 @@ const Login = () => {
             resolver: yupResolver(schema),
         });
 
-    const NavigateToOtp: SubmitHandler<IFormInput> = useCallback(async (data) => {
+    const NavigateToOtp: SubmitHandler<IFormInput> = async (data) => {
         try {
             setIsloading(true);
             await postData('auth/franchiseloginotp', data);
@@ -60,7 +60,7 @@ const Login = () => {
         } finally {
             setIsloading(false);
         }
-    }, []);
+    };
 
 
 

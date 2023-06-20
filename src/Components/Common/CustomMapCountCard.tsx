@@ -11,7 +11,7 @@ type props = {
 }
 
 
-const CustomMapCountCard = memo(({label,count,all,width,color,onclick}:props) => {
+const CustomMapCountCard =({label,count,all,width,color,onclick}:props) => {
   
     return (
         <Box
@@ -45,6 +45,6 @@ const CustomMapCountCard = memo(({label,count,all,width,color,onclick}:props) =>
             </Box>}
         </Box>
     )
-})
+}
 
 export default CustomMapCountCard
