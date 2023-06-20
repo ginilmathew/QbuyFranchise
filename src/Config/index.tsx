@@ -1,10 +1,10 @@
 export const env = "dev"
 
 const URLS = {
-        live: "https://apiqbuygreen.diginestsolutions.in/public/api/",
-        testing: "https://qbuygreenapi.diginestsolutions.in/public/api/",
-        dev: "https://apiqbuypanda.diginestsolutions.in/public/api/"
-    }
+    live: "https://apiqbuygreen.diginestsolutions.in/public/api/",
+    testing: "https://qbuygreenapi.diginestsolutions.in/public/api/",
+    dev: "https://apiqbuypanda.diginestsolutions.in/public/api/"
+}
 const url = {
     dev: "https://apibulletinly.diginestsolutions.in/public/api",
     live: "https://apiqbuygreen.diginestsolutions.in/public/api",

@@ -14,7 +14,6 @@ const axiosInstance: AxiosInstance = axios.create({
 
 const requestHandler = (request: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     let token = localStorage.getItem("token");
-
     // // Token will be dynamic so we can use any app-specific way to always   
     // // fetch the new token before making the call
     if (token) {
