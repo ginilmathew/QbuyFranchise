@@ -43,7 +43,7 @@ export const authOptions = {
 				});
 				const user = await res.json();
 
-				console.log({ user: JSON.stringify(user) },'GOT THE RESPONSE IN NEXT AUTHG')
+				// console.log({ user: JSON.stringify(user) },'GOT THE RESPONSE IN NEXT AUTHG')
 				if (!res.ok) {
 					throw new Error(user.message);
 				}

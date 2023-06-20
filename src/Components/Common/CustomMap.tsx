@@ -36,7 +36,7 @@ const CustomMap = ({ onComplete, path, data }: props) => {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyDDFfawHZ7MhMPe2K62Vy2xrmRZ0lT6X0I"
+        googleMapsApiKey: "AIzaSyBBcghyB0FvhqML5Vjmg3uTwASFdkV8wZY"
     })
 
 
