@@ -24,7 +24,7 @@ const Revenue = () => {
     }
 
 
-    const { data, error, isLoading } = useSWR('revenuelist', fetchuser, { refreshInterval: 1000 });
+    const { data, error, isLoading } = useSWR('revenuelist', fetchuser);
 
     console.log({ data })
 
