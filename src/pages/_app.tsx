@@ -54,9 +54,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   }, []);
 
 
-  console.log({ COMPONENT: Component.auth })
 
-  console.log({ session })
   return <main className={poppins.className}>
     {isLoading && showHeader && (
       <Stack sx={{ width: '100%', color: 'grey.500' }} >

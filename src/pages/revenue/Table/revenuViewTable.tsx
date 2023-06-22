@@ -15,7 +15,7 @@ type props = {
 
 const RevenuViewTable = ({ res }: props) => {
 
-
+console.log({res},'RESPONSE')
 
     return (
         <Box>
@@ -37,9 +37,9 @@ const RevenuViewTable = ({ res }: props) => {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                   {row?.productdata?.store?.name}
+                                   {row?.name}
                                 </TableCell>
-                                <TableCell align="center">{row.store?.name}</TableCell>
+                                <TableCell align="center">{row?.productdata?.store?.name}</TableCell>
                                 <TableCell align="center">{row.quantity}</TableCell>
                                 <TableCell align="center">{row?.unitPrice}</TableCell>
                                 <TableCell align="center">{row?.quantity * row?.unitPrice}</TableCell>
@@ -75,12 +75,12 @@ const RevenuViewTable = ({ res }: props) => {
                         <TableRow>
                             <TableCell colSpan={2}></TableCell>
                             <TableCell align="right">Franchise Profit</TableCell>
-                            <TableCell align="center">₹ {res?.franchise_profit}</TableCell>
+                            <TableCell align="center">₹ {(res?.franchise_profit).toFixed(2)}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell colSpan={2}></TableCell>
                             <TableCell align="right">Franchise Revenue</TableCell>
-                            <TableCell align="center">₹ {res?.franchise_revenue}</TableCell>
+                            <TableCell align="center">₹ {(res?.franchise_revenue).toFixed(2)}</TableCell>
                         </TableRow>
                     </TableBody>
 

@@ -26,20 +26,20 @@ const Revenue = () => {
 
     const { data, error, isLoading } = useSWR('revenuelist', fetchuser);
 
-    console.log({ data })
 
+    // console.log({ data })
     const [search, setSearch] = useState<any>(data?.revenue_list);
     const [list, setList] = useState<any>([]);
 
 
-    console.log({ list });
+    // console.log({ list });
 
     useEffect(() => {
         if (data?.revenue_list?.length > 0) {
             setList(data?.revenue_list)
             setSearch(data?.revenue_list)
         }
-    },[data?.revenue_list])
+    }, [data?.revenue_list])
 
 
     const viewRevenuePage = useCallback((id: string) => {
@@ -147,10 +147,10 @@ const Revenue = () => {
         <Box px={5} py={2} pt={10} mt={0}>
             <Box bgcolor={"#ffff"} mt={3} p={2} borderRadius={5} height={'100%'}>
                 <CustomTableHeader setState={searchfranchise} imprtBtn={false} Headerlabel='Revenue' onClick={null} addbtn={false} />
-               
-                    <Box py={3}>
-                        <CustomTable dashboard={false} columns={columns} rows={list ? list : []} id={"_id"} bg={"#ffff"} label='Recent Activity' storeNumber={data?.total_store_count} citynumber={data?.city_count} />
-                    </Box>
+
+                <Box py={3}>
+                    <CustomTable dashboard={false} columns={columns} rows={list ? list : []} id={"_id"} bg={"#ffff"} label='Recent Activity' storeNumber={data?.total_store_count} citynumber={data?.city_count} />
+                </Box>
             </Box>
         </Box>
     )

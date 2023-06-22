@@ -11,15 +11,14 @@ import { signOut } from "next-auth/react"
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import UserContext from '@/Context/user';
+
 
 const Header = () => {
     const router = useRouter()
-    const userContext = useContext(UserContext);
-
-
+   
+    let Name = localStorage?.getItem('name')
+    console.log({Name})
 
     const colorHeader = router.pathname === '/';
     const colorHeader2 = router.pathname === '/smartSuggest';
@@ -58,8 +57,10 @@ const Header = () => {
 
         signOut({ callbackUrl: "/login" })
 
-        // router.push('/login')
+   
     }
+
+
 
 
     return (
@@ -94,9 +95,9 @@ const Header = () => {
 
             <Box display={'flex'} gap={1} >
                 <Tooltip title='Profile'>
-                    <Box width={140} height={50} sx={{ background: '#58d36e', cursor: 'pointer' }} borderRadius={10} display={'flex'} justifyContent={'space-between'} alignItems={'center'} onClick={NavigationToProfile}>
+                    <Box minWidth={140} height={50} sx={{ background: '#58d36e', cursor: 'pointer' }} borderRadius={10} display={'flex'} justifyContent={'space-between'} alignItems={'center'} onClick={NavigationToProfile}>
                         <Box px={1.5}>
-                            <Typography sx={{ fontFamily: `'Poppins' sans-serif`, }}>{'Franchise'}</Typography>
+                            <Typography sx={{ fontFamily: `'Poppins' sans-serif`, fontSize:'14px'}}>{Name}</Typography>
                             <Typography fontSize={12} color={'#fff'} sx={{ fontFamily: `'Poppins' sans-serif`, }}>{'Franchisee'}</Typography>
                         </Box>
                         <Avatar sx={{ height: 40, borderRadius: 10 }}></Avatar>

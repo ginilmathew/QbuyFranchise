@@ -38,8 +38,10 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
         try {
             if (session) {
                 let details = JSON.parse(JSON.stringify(session.user))
+                // console.log({ details }, 'DETAIL PAGE>>>')
                 userContext.setUser(details);
                 localStorage.setItem("token", details?.accessToken)
+                localStorage.setItem('name', details?.name)
             }
         } catch (err: any) {
             void router.push('/login')

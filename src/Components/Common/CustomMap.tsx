@@ -45,7 +45,8 @@ const CustomMap = ({ onComplete, path, data }: props) => {
             disableDefaultUI: true,
             clickableIcons: true,
             scrollwheel: false,
-            zoomControl: true
+            zoomControl: true,
+            fullscreenControl: true,
         }),
         []
     );
@@ -92,7 +93,7 @@ const CustomMap = ({ onComplete, path, data }: props) => {
 
 
     const handleMarkerClick = (marker: MarkerData) => {
-       
+
         setSelectedMarker(marker);
     };
 
@@ -136,18 +137,18 @@ const CustomMap = ({ onComplete, path, data }: props) => {
             }))
             setVendor(vendorresult)
             let customerresult = data?.customers?.map((c: any) => ({
-                name:c?.users?.name,
+                name: c?.users?.name,
                 position: { lat: parseFloat(c.location?.[0]), lng: parseFloat(c?.location?.[1]) },
                 email: c?.users?.email,
                 id: c?.customer_id,
                 address: '',
-                mobile:c?.users?.mobile,
+                mobile: c?.users?.mobile,
                 category: 'customer',
                 logo: './images/user.png',
-                status:c?.status
+                status: c?.status
             }))
 
-       
+
             setCustomer(customerresult)
 
         }
