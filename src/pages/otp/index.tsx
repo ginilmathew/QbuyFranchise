@@ -17,6 +17,8 @@ const OTP = () => {
     const { mobile } = useContext(UserContext);
 
 
+    const customId = "custom-id-yes";
+    const customIdError = "custom-id-yesError";
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
     const handleOTPChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +68,7 @@ const OTP = () => {
             } else {
                 if (res?.url) {
                     //auth.setUser(session?.user)
-                  
+
                     //router.push('/home');
                     router.push(res?.url);
                 }
@@ -84,9 +86,9 @@ const OTP = () => {
     const ResndOtp = useCallback(async () => {
         try {
             await postData('auth/franchiseloginotp', { mobile: mobile });
-            toast.success(`An OTP send to your registered number`);
+            toast.success(`An OTP send to your registered number`, { toastId: customId });
         } catch (err: any) {
-            toast.error(err?.message);
+            toast.error(err?.message, { toastId: customIdError });
         }
     }, [])
 
