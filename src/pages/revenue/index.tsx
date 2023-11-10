@@ -56,11 +56,12 @@ const Revenue = () => {
             align: 'center',
         },
         {
-            field: 'name',
+            field: 'rider_name',
             headerName: 'Rider Name',
             flex: 1,
             headerAlign: 'center',
             align: 'center',
+            valueGetter: (params) => params.row.rider_name ? params.row.rider_name  : '_',
 
         },
         {
@@ -69,6 +70,7 @@ const Revenue = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
+            valueGetter: (params) => params.row.store_name?.map((res:any)=>res),
 
         },
         {

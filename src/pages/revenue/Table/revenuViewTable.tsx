@@ -15,7 +15,11 @@ type props = {
 
 const RevenuViewTable = ({ res }: props) => {
 
-console.log({res},'RESPONSE')
+
+
+let varient = res?.variant_id
+
+
 
     return (
         <Box>
@@ -36,9 +40,14 @@ console.log({res},'RESPONSE')
                                 key={row._id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
+                                {row?.variant_id ?
                                 <TableCell component="th" scope="row">
-                                   {row?.name}
-                                </TableCell>
+                                    
+                                   {row?.name}{'('}{row?.productdata?.variants?.filter((res:any)=>res?._id === row?.variant_id).map((res:any)=>res?.title)}{')'}
+                                </TableCell> :  <TableCell component="th" scope="row">
+                                    
+                                    {row?.name}
+                                 </TableCell>}
                                 <TableCell align="center">{row?.productdata?.store?.name}</TableCell>
                                 <TableCell align="center">{row.quantity}</TableCell>
                                 <TableCell align="center">{row?.unitPrice}</TableCell>
