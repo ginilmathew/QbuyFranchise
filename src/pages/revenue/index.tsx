@@ -111,6 +111,7 @@ const Revenue = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
+            valueGetter: (params) => params.row.franchise_profit?.toFixed(2),
 
         },
         {
