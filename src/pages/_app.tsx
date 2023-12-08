@@ -20,9 +20,8 @@ import ModeProvider from '@/Context/type/ModeContext';
 
 
 type CustomAppProps = AppProps & {
-  Component: NextComponentType & { auth?: boolean } // add auth type
+	Component: NextComponentType & { auth?: boolean } // add auth type
 }
-
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -32,7 +31,7 @@ const poppins = Poppins({
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: CustomAppProps) {
 
-
+console.log({session},'SESSION')
 
   const router = useRouter();
   const showHeader = (router.pathname === '/login' || router.pathname === "/otp") ? false : true;
@@ -67,16 +66,16 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
       <ModeProvider>
 
         <UserProvider>
-          {Component?.auth ?
-            <Component {...pageProps} />
-            :
+          {Component?.auth ? (
+            <Component {...pageProps}/>
+           ) :(
             <ProtectedRoute>
               <UserProvider>
                   <Header />
-                <Component {...pageProps} />
+                <Component {...pageProps}/>
               </UserProvider>
             </ProtectedRoute>
-          }
+          )}
           <ToastContainer />
         </UserProvider>
       </ModeProvider>

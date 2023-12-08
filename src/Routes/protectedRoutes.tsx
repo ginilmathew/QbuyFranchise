@@ -49,6 +49,14 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
     }, [session])
 
+    useEffect(()=>{
+        if(session){
+            router.push('/')
+        }
+    },[session])
+
+
+
     if (status === "loading") {
         return (
             <div>Loading...</div>

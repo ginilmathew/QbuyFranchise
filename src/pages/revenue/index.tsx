@@ -32,14 +32,15 @@ const Revenue = () => {
     const [list, setList] = useState<any>([]);
 
 
+
     // console.log({ list });
 
     useEffect(() => {
-        if (data?.revenue_list?.length > 0) {
+        if (data) {
             setList(data?.revenue_list)
             setSearch(data?.revenue_list)
         }
-    }, [data?.revenue_list])
+    }, [data])
 
 
     const viewRevenuePage = useCallback((id: string) => {

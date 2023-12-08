@@ -5,13 +5,27 @@ import styles from '@/styles/Home.module.css'
 import Login from './login'
 import Revenue from './revenue'
 import { useSession } from 'next-auth/react'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const { data: session, status } = useSession()
+  const router = useRouter();
 
-  console.log({session},'FIRSTCALL')
+  useEffect(() => {
+    // If the session is already present, redirect to another page
+    if (session) {
+      router.push('/revenue'); // Replace '/dashboard' with the actual route you want to redirect to
+    }
+  }, [session, router]);
+
+  // console.log({ session }, 'FIRSTCALL');
+
+
+    
+
   return (
     <>
       <Head>
