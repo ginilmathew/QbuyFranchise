@@ -48,6 +48,21 @@ const Revenue = () => {
     }, [])
 
 
+
+    const valueGetter = (params:any) => {
+        const storeName = params?.row?.store_name;
+      
+        if (Array.isArray(storeName)) {
+          // If it's an array, map over it
+          return storeName.map((res) => res);
+        } else if (storeName) {
+          // If it's not an array but exists, return it as is
+          return storeName;
+        }
+      
+        // If it doesn't exist or is undefined, handle it accordingly
+        return "-";
+      };
     const columns: GridColDef[] = [
         {
             field: 'order_id',
@@ -71,7 +86,7 @@ const Revenue = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            valueGetter: (params) => params.row.store_name?.map((res:any)=>res),
+            valueGetter: (params) => valueGetter(params),
 
         },
         {
@@ -112,7 +127,7 @@ const Revenue = () => {
             flex: 1,
             headerAlign: 'center',
             align: 'center',
-            valueGetter: (params) => params.row.franchise_profit?.toFixed(2),
+            valueGetter: (params) => params?.row?.franchise_profit?.toFixed(2),
 
         },
         {
